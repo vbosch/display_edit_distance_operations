@@ -1,6 +1,7 @@
 module DisplayEditDistanceOperations
 
   require 'RMagick'
+  require 'ruby-debug'
 
   class Image
     def initialize(ex_path)
@@ -12,15 +13,18 @@ module DisplayEditDistanceOperations
     def draw_edit_operations(operations_file, output_file)
 
       gc = Magick::Draw.new
-      gc.stroke_width = 1
-      gc.fill_opacity(0.5)
-      operations_file.operations.each_value do |operation|
-        gc.fill=@colors[operation.type]
-        gc.polygon(operation.to_a)
+      gc.stroke_width = 2
+      operations_file.operations.each do |operation|
+        gc.fill(@colors[operation.type])
+        gc.fill_opacity(0.5)
+        gc.polygon(*operation.to_a(@img.columns))
       end
+
       gc.draw(@img)
-      @img.display
       to_file(output_file, @img)
+    end
+    def to_file(path,img=@img)
+      img.write(path)
     end
   end
 end

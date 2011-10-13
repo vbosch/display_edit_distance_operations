@@ -11,10 +11,10 @@ module DisplayEditDistanceOperations
       @original = values[3..4].map{|val| val.to_i}
     end
 
-    def to_a
-      return [@original[0],0,@original[1],0,@hypothesis[1],@img.columns] if @type == :insertion
-      return [@original[1],0,@hypothesis[1],0,@hypothesis[0],@img.columns] if @type == :insertion
-      [@original[0],0,@original[1],0,@hypothesis[1],@img.columns,@hypothesis[0],@img.columns]
+    def to_a(width)
+      return [0,@original[0] ,0,@original[1] ,width-1,@original[1], width-1,@original[0]] if @type == :insertion
+      return [0,@original[1] ,width-1,@hypothesis[1] ,width-1,@hypothesis[0] ,0,@original[1]] if @type == :deletion
+      [0,@original[0] ,0,@original[1],width-1,@hypothesis[1] ,width-1,@hypothesis[0]]
     end
   end
 
@@ -29,7 +29,7 @@ module DisplayEditDistanceOperations
     def read
       File.open(@file_name,"r") do |file|
         while (line = file.gets)
-          @operations.push(Operation.new(line))
+          @operations.push(Operation.new(line.split))
         end
       end
     end

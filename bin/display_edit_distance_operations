@@ -26,7 +26,8 @@ Trollop::die :image_file, "Image file path was not defined" unless opts[:image_f
 Trollop::die :image_file, "Indicated image file does not exist" unless File.exist?(opts[:image_file])
 
 op_file = DisplayEditDistanceOperations::DistanceOperationsFile.new(opts[:operations_file])
+op_file.read
 
-base_img = DisplayEditDistanceOperations::Image(opts[:image_file])
+base_img = DisplayEditDistanceOperations::Image.new(opts[:image_file])
 
-base_img.draw_edit_operations(op_file)
+base_img.draw_edit_operations(op_file,"out.png")
