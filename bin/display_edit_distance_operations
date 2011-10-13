@@ -3,5 +3,30 @@
 require File.expand_path(
     File.join(File.dirname(__FILE__), %w[.. lib display_edit_distance_operations]))
 
-# Put your code here
+require 'trollop'
+require 'ap'
 
+opts = Trollop::options do
+	version "display_edit_distance_operations 0.0.1 (c) 2011 Vicente Bosch Campos"
+	banner <<-EOS
+display_edit_distance_operations is a command tool to display the calculated edit distance operations on top of a file.
+Usage:
+	display_edit_distance_operations [options]
+	where [options] are:
+EOS
+
+opt :operations_file, "file containing the edit operations of detected lines", :type => :string
+opt :image_file, "Base image of the target original lines", :type => :string
+end
+
+Trollop::die :operations_file, "Edit operations file was not defined" unless opts[:operations_file]
+Trollop::die :operations_file, "Indicated operations file does not exist" unless File.exist?(opts[:operations_file])
+
+Trollop::die :image_file, "Image file path was not defined" unless opts[:image_file]
+Trollop::die :image_file, "Indicated image file does not exist" unless File.exist?(opts[:image_file])
+
+op_file = DisplayEditDistanceOperations::DistanceOperationsFile.new(opts[:operations_file])
+
+base_img = DisplayEditDistanceOperations::Image(opts[:image_file])
+
+base_img.draw_edit_operations(op_file)
