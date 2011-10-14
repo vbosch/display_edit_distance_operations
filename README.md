@@ -1,22 +1,24 @@
 display_edit_distance_operations
 ===========
 
-FIXME (describe your package)
+Given a file indicating the edit operations performed on lines detected against the original target and the image
+of the document from which the line limits where extracted this command tool draws the rectangles that
+graphically describe the substitution, deletion or insertion
 
 Features
 --------
 
-* FIXME (list of features and unsolved problems)
+Loads a simple txt and any type of image and performs the display.
 
 Examples
 --------
 
-    FIXME (code sample of usage)
+    Example usage can be seen in bin/display_edit_distance_operations file.
 
 Requirements
 ------------
 
-* FIXME (list of requirements)
+    Requires trollop and Rmagick gem.
 
 Install
 -------
@@ -26,19 +28,14 @@ Install
 Author
 ------
 
-Original author: FIXME (author's name)
-
-Contributors:
-
-* FIXME (contributor 1?)
-* FIXME (contributor 2?)
+    Vicente Bosch Campos
 
 License
 -------
 
-(The MIT License) FIXME (different license?)
+(The MIT License)
 
-Copyright (c) 2011 FIXME (author's name)
+Copyright (c) 2011 Vicente Bosch Campos
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
