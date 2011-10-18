@@ -17,6 +17,7 @@ EOS
 
 opt :operations_file, "file containing the edit operations of detected lines", :type => :string
 opt :image_file, "Base image of the target original lines", :type => :string
+opt :operation_mode, "Objects types that are accepted as operations. Types: frontier or line", :type => :string, :default => 'frontier'
 end
 
 Trollop::die :operations_file, "Edit operations file was not defined" unless opts[:operations_file]
@@ -25,9 +26,12 @@ Trollop::die :operations_file, "Indicated operations file does not exist" unless
 Trollop::die :image_file, "Image file path was not defined" unless opts[:image_file]
 Trollop::die :image_file, "Indicated image file does not exist" unless File.exist?(opts[:image_file])
 
-op_file = DisplayEditDistanceOperations::DistanceOperationsFile.new(opts[:operations_file])
+Trollop::die :operation_mode, "Operation type must be frontier or line" unless ["frontier","line"].include?(opts[:operation_mode])
+
+op_file = DisplayEditDistanceOperations::DistanceOperationsFile.new(opts[:operations_file],opts[:operation_mode])
+
 op_file.read
 
 base_img = DisplayEditDistanceOperations::Image.new(opts[:image_file])
 
-base_img.draw_edit_operations(op_file,"out.png")
+base_img.draw_edit_operations(op_file,opts[:operation_mode],"out.png")
