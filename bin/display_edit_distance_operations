@@ -34,4 +34,4 @@ op_file.read
 
 base_img = DisplayEditDistanceOperations::Image.new(opts[:image_file])
 
-base_img.draw_edit_operations(op_file,opts[:operation_mode],"out.png")
+base_img.draw_edit_operations(op_file,"out.png")

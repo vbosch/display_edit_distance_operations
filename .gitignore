@@ -16,3 +16,7 @@ announcement.txt
 coverage
 doc
 pkg
+.idea/
+*.png
+*.txt
+.DS_Store

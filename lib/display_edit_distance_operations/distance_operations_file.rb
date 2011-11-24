@@ -11,6 +11,10 @@ module DisplayEditDistanceOperations
       @original = values[3..4].map{|val| val.to_i}
     end
 
+    def draw_primitive
+      "polygon"
+    end
+
     def to_a(width)
       return [0,@original[0] ,0,@original[1] ,width-1,@original[1], width-1,@original[0]] if @type == :insertion
       return [0,@hypothesis[1] ,width-1,@hypothesis[1] ,width-1,@hypothesis[0] ,0,@hypothesis[0]] if @type == :deletion
@@ -29,10 +33,15 @@ module DisplayEditDistanceOperations
       @original = values[2].to_i
     end
 
+    def draw_primitive
+      return "polygon" if @type == :substitution
+      "line"
+    end
+
     def to_a(width)
       return [0,@original,width-1,@original] if @type == :insertion
       return [0,@hypothesis,width-1,@hypothesis] if @type == :deletion
-      [0,@original,width-1,@hypothesis]
+      [0,@original,width-1,@original,width-1,@hypothesis,0,@hypothesis]
     end
   end
 
@@ -43,14 +52,13 @@ module DisplayEditDistanceOperations
       @file_name = file_name
       @operations = []
       case op_type
-      when "frontier" then
+        when "frontier" then
           @op_rep= Object.const_get("DisplayEditDistanceOperations").const_get("FrontierOperation")
-      when "line" then
+        when "line" then
           @op_rep= Object.const_get("DisplayEditDistanceOperations").const_get("LineOperation")
-      else
-        raise "Unimplemented operation type passed"
+        else
+          raise "Unimplemented operation type passed"
       end
-
     end
 
     def read
